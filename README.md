@@ -1,0 +1,2 @@
+# IdeaSqliteDemo
+sqlite basic operation
