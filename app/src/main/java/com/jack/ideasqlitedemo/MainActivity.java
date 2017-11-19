@@ -3,6 +3,9 @@ package com.jack.ideasqlitedemo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * Sqlite数据库的基本操作
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
