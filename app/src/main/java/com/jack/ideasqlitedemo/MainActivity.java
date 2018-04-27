@@ -1,9 +1,11 @@
 package com.jack.ideasqlitedemo;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jack.sqlite.IdeaDatebaseHelper;
 
@@ -19,7 +21,7 @@ import com.jack.sqlite.IdeaDatebaseHelper;
 public class MainActivity extends Activity {
 
     private IdeaDatebaseHelper mDbHelper;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,41 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //update db
                 //onUpgrade() 中操作
+            }
+        });
+
+        findViewById(R.id.insert_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //insert data
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put("name", "葵花宝典");
+                values.put("author", "李楠楠");
+                values.put("price", 5.5);
+                values.put("pages", 108);
+                db.insert("Book", null, values);
+
+                values.clear();
+                values.put("name", "辟邪剑谱");
+                values.put("author", "李楠楠");
+                values.put("price", 6.5);
+                values.put("pages", 123);
+                db.insert("Book", null, values);
+
+                Toast.makeText(MainActivity.this, "insert data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        findViewById(R.id.update_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //update data
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put("price", 5.0);
+                db.update("Book", values, "name = ?", new String[] {"葵花宝典"});
+
             }
         });
 
