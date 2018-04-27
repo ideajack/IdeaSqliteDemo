@@ -79,7 +79,15 @@ public class MainActivity extends Activity {
                 ContentValues values = new ContentValues();
                 values.put("price", 5.0);
                 db.update("Book", values, "name = ?", new String[] {"葵花宝典"});
+            }
+        });
 
+        findViewById(R.id.delete_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete data
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                db.delete("Book", "pages > ?", new String[] {"120"});
             }
         });
 
