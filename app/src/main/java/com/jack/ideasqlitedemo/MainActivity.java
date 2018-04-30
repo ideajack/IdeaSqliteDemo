@@ -2,8 +2,10 @@ package com.jack.ideasqlitedemo;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -55,14 +57,14 @@ public class MainActivity extends Activity {
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put("name", "葵花宝典");
-                values.put("author", "李楠楠");
+                values.put("author", "瓜瓜");
                 values.put("price", 5.5);
                 values.put("pages", 108);
                 db.insert("Book", null, values);
 
                 values.clear();
                 values.put("name", "辟邪剑谱");
-                values.put("author", "李楠楠");
+                values.put("author", "瓜瓜");
                 values.put("price", 6.5);
                 values.put("pages", 123);
                 db.insert("Book", null, values);
@@ -88,6 +90,29 @@ public class MainActivity extends Activity {
                 //delete data
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 db.delete("Book", "pages > ?", new String[] {"120"});
+            }
+        });
+
+        findViewById(R.id.query_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //query data
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                Cursor book = db.query("Book", null, null, null, null, null, null);
+                if (book.moveToFirst()) {
+                    do {
+                        String name = book.getString(book.getColumnIndex("name"));
+                        String author = book.getString(book.getColumnIndex("author"));
+                        double price = book.getDouble(book.getColumnIndex("price"));
+                        int pages = book.getInt(book.getColumnIndex("pages"));
+                        Log.i("zxj", "name-" + name);
+                        Log.i("zxj", "author-" + author);
+                        Log.i("zxj", "price-" + price);
+                        Log.i("zxj", "pages-" + pages);
+                    } while (book.moveToNext());
+                }
+                book.close();
+
             }
         });
 
