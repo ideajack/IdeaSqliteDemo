@@ -69,6 +69,11 @@ public class MainActivity extends Activity {
                 values.put("pages", 123);
                 db.insert("Book", null, values);
 
+                //使用sql语句
+                db.execSQL("insert into Book(name, author, price, pages) values(?, ?, ?, ?)",
+                        new String[] { "野蛮女友", "瓜瓜", "99.9", "520"});
+                db.execSQL("insert into Book(name, author, price, pages) values(?, ?, ?, ?)",
+                        new String[] {"多行动，少计划", "大狗子", "1.2", "66"});
                 Toast.makeText(MainActivity.this, "insert data", Toast.LENGTH_SHORT).show();
             }
         });
@@ -81,6 +86,10 @@ public class MainActivity extends Activity {
                 ContentValues values = new ContentValues();
                 values.put("price", 5.0);
                 db.update("Book", values, "name = ?", new String[] {"葵花宝典"});
+
+                db.execSQL("update Book set price = ? where name = ?",
+                        new String[] {"99", "多行动，少计划"});
+
             }
         });
 
@@ -90,6 +99,9 @@ public class MainActivity extends Activity {
                 //delete data
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 db.delete("Book", "pages > ?", new String[] {"120"});
+
+                db.execSQL("delete from Book where author = ?",
+                        new String[] {"李楠楠"});
             }
         });
 
@@ -99,6 +111,7 @@ public class MainActivity extends Activity {
                 //query data
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 Cursor book = db.query("Book", null, null, null, null, null, null);
+//                Cursor cursor = db.rawQuery("select * from Book", null);
                 if (book.moveToFirst()) {
                     do {
                         String name = book.getString(book.getColumnIndex("name"));
