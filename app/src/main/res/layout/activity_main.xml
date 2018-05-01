@@ -36,6 +36,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="查询数据" />
+    <Button
+        android:id="@+id/transaction_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="事务" />
 </LinearLayout>
 
 

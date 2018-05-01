@@ -101,7 +101,7 @@ public class MainActivity extends Activity {
                 db.delete("Book", "pages > ?", new String[] {"120"});
 
                 db.execSQL("delete from Book where author = ?",
-                        new String[] {"李楠楠"});
+                        new String[] {"瓜"});
             }
         });
 
@@ -125,6 +125,29 @@ public class MainActivity extends Activity {
                     } while (book.moveToNext());
                 }
                 book.close();
+
+            }
+        });
+
+        findViewById(R.id.transaction_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                db.beginTransaction();
+                try {
+                    db.delete("Book", null, null);
+                    /*if (true) {
+                        throw new NullPointerException();
+                    }*/
+                    db.execSQL("insert into Book(name, author, price, pages) values(?, ?, ?, ?)",
+                            new String[] {"二狗是怎么炼成的", "二狗", "56.5", "101"});
+                    db.setTransactionSuccessful();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
 
             }
         });
