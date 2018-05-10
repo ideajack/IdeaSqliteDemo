@@ -37,9 +37,12 @@ public class IdeaDatebaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists Book");
-        db.execSQL("drop table if exists Category");
-        onCreate(db);
+        switch (oldVersion) {
+            case 1:
+                db.execSQL(CREATE_BOOK);
+            case 2:
+                db.execSQL(CREATE_CATEGORY);
+        }
 
         Toast.makeText(mContext, "upgrade db", Toast.LENGTH_SHORT).show();
     }
